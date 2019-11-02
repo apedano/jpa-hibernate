@@ -16,23 +16,45 @@
  */
 package it.apedano.jpahibernate.entity;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 /**
  *
  * @author Alessandro Pedano <alessandro.pedano@transsmart.com>
  */
 @Entity
-public class Course {
+@Table(name="CourseDetails") //Hibernate will use the SQL convetions therefore the name will be course_details
+@NamedQueries(
+        value = {
+            @NamedQuery(name="get_all_courses", query="Select c from Course c"),
+            @NamedQuery(name="get_courses_like_giocare", query="Select c from Course c where c.name like '%giocare%'")
+        })
+public class Course implements Serializable {
 
     @Id
     @GeneratedValue
     private Long id;
 
+    @Column(name="name", nullable = false, unique = false)
     private String name;
-
+    
+    
+    @UpdateTimestamp //not JPA but custom Hibernate annotation
+    private LocalDateTime lastUpdatedDate;
+    
+    @CreationTimestamp//not JPA but custom Hibernate annotation
+    private LocalDateTime createDate;
+    
     /**
      * Default constractor created by JPA Protected because has not to be public
      */
@@ -57,7 +79,9 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" + "id=" + id + ", name=" + name + '}';
+        return "Course{" + "id=" + id + ", name=" + name + ", lastUpdatedDate=" + lastUpdatedDate + ", createDate=" + createDate + '}';
     }
+
+    
 
 }

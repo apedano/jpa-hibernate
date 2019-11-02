@@ -103,5 +103,17 @@ public class CourseRepository {
         em.flush();
     }
     
+    public void timestampExample() throws InterruptedException {
+        String newCourseName = "Nuovo corso per giocare";
+        LOGGER.info("Method [{}] called", "playWithEntityManager()");
+        Course course1 = new Course(newCourseName);
+        em.persist(course1); //here the course is persiste
+        em.flush(); //here creation and update change will be the same
+        Thread.sleep(1500l);
+        Course course10003 = findById(10003l);
+        course10003.setName(course10003.getName() + " - updated");
+        //here the transaction will be persisted and the course updated
+    }
+    
     
 }

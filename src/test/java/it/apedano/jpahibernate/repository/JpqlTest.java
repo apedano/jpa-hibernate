@@ -75,6 +75,28 @@ public class JpqlTest {
         //[Course{id=1, name=Nuovo corso per giocare}, Course{id=2, name=Nuovo corso per giocare2 - updated}]
     }
     
+    @Test
+    @DirtiesContext //spring will automatically reset the data changed by the test method. This makes the test atomic and isolated
+    public void jpql_WithNamedQuery() {
+        //em.createQuey("Select c from Course c")
+        TypedQuery<Course> query = 
+                em.createNamedQuery("get_all_courses", Course.class);
+        List<Course> courses = query.getResultList();
+        LOGGER.info("Results of 'Select c from Course c' with conditions -> {}", courses);
+        //[Course{id=1, name=Nuovo corso per giocare}, Course{id=2, name=Nuovo corso per giocare2 - updated}]
+    }
+    
+    @Test
+    @DirtiesContext //spring will automatically reset the data changed by the test method. This makes the test atomic and isolated
+    public void jpql_WithConditionsWithNamedQuery() {
+        //em.createQuey("Select c from Course c")
+        TypedQuery<Course> query = 
+                em.createNamedQuery("get_courses_like_giocare", Course.class);
+        List<Course> courses = query.getResultList();
+        LOGGER.info("Results of 'Select c from Course c' with conditions -> {}", courses);
+        //[Course{id=1, name=Nuovo corso per giocare}, Course{id=2, name=Nuovo corso per giocare2 - updated}]
+    }
+    
     
 }
  

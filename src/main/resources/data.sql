@@ -19,7 +19,10 @@
  * Created: Sep 15, 2019
  */
 
-insert into course(id, name) values (10001, 'Corso 10001');
-insert into course(id, name) values (10002, 'Corso 10002');
-insert into course(id, name) values (10003, 'Corso 10003');
+insert into course_details(id, name, create_date, last_updated_date) 
+ values (10001, 'Corso 10001', SYSDATE(), SYSDATE());
+insert into course_details(id, name, create_date, last_updated_date)
+ values (10002, 'Corso 10002', SYSDATE(), SYSDATE());
+insert into course_details(id, name, create_date, last_updated_date)
+ values (10003, 'Corso 10003', SYSDATE(), SYSDATE());
 
