@@ -74,7 +74,8 @@ public class CourseRepositoryTest {
     @Test
     @DirtiesContext
     public void playWithEntityManagerTest() {
+        LOGGER.info("playWithEntityManagerTest - started");
         courseRepository.playWithEntityManager();
     }
-
 }
+ 

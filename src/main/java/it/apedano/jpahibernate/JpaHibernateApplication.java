@@ -1,6 +1,5 @@
 package it.apedano.jpahibernate;
 
-import it.apedano.jpahibernate.entity.Course;
 import it.apedano.jpahibernate.repository.CourseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,8 +22,7 @@ public class JpaHibernateApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Course course = courseRepository.findById(10001l);
-        LOGGER.info("Course loaded from db: {}", course);
+        courseRepository.playWithEntityManager();
     }
 
 }

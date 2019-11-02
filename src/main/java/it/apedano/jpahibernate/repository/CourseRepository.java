@@ -60,11 +60,24 @@ public class CourseRepository {
     public void playWithEntityManager() {
         String newCourseName = "Nuovo corso per giocare";
         LOGGER.info("Method [{}] called", "playWithEntityManager()");
-        Course course = new Course(newCourseName);
-        em.persist(course);
-        course.setName(course.getName() + " - updated");
-        //I don't need to call the merge the entity because the entity manager keep tracks of all the changes and flush
-        //them at the transaction commit because the class is annotated as Transactional
+        Course course1 = new Course(newCourseName);
+        em.persist(course1); //here the course is persiste
+        em.flush(); //all changes until now are all persisted to the database
+        
+        //I don't need to call the em.merge() the entity because the entity manager keep tracks of all the changes and flush
+        //them at the transaction commit 
+        //because the class is annotated as Transactional
+        Course course2 = new Course(newCourseName + "2");
+        em.persist(course2);
+        em.flush();
+        em.detach(course2); //all changes to course2 from now on, 
+        //will not be transferred to the database
+        em.clear(); //all entities wil not be tracked by the em
+        //it's like a detachAll method
+        course1.setName(course1.getName() + " - updated");
+        course2.setName(course2.getName() + " - updated");
+        
+        
 
     }
 }
