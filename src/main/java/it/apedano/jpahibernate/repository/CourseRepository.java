@@ -97,10 +97,9 @@ public class CourseRepository {
         //coming from the last flush operation
         //(the last change to the name will not be keeped)
         LOGGER.info("Course1 name before refresh: " + course1.getName());
-        em.refresh(course1); 
+        em.refresh(course1); //triggers a select from the db
         //the printed name will be without updated
         LOGGER.info("Course1 name after refresh: " + course1.getName());
-        
         em.flush();
     }
     
