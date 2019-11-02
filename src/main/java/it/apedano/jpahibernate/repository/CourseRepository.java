@@ -57,12 +57,14 @@ public class CourseRepository {
         em.remove(course);
     }
 
-    public void playWithEntityManager() {
+    public void flushDetachClearExample() {
         String newCourseName = "Nuovo corso per giocare";
         LOGGER.info("Method [{}] called", "playWithEntityManager()");
         Course course1 = new Course(newCourseName);
         em.persist(course1); //here the course is persiste
         em.flush(); //all changes until now are all persisted to the database
+        //this will force the persist regardless of the em internal persist 
+        //strategy
         
         //I don't need to call the em.merge() the entity because the entity manager keep tracks of all the changes and flush
         //them at the transaction commit 
@@ -76,8 +78,31 @@ public class CourseRepository {
         //it's like a detachAll method
         course1.setName(course1.getName() + " - updated");
         course2.setName(course2.getName() + " - updated");
-        
-        
-
     }
+    
+    public void refreshExample() {
+        String newCourseName = "Nuovo corso per giocare";
+        LOGGER.info("Method [{}] called", "playWithEntityManager()");
+        Course course1 = new Course(newCourseName);
+        em.persist(course1); //here the course is persiste
+        em.flush(); //all changes until now are all persisted to the database
+        Course course2 = new Course(newCourseName + "2");
+        em.persist(course2);
+        em.flush();
+        
+        course1.setName(course1.getName() + " - updated");
+        course2.setName(course2.getName() + " - updated");
+        
+        //course1 will be restored with data from db 
+        //coming from the last flush operation
+        //(the last change to the name will not be keeped)
+        LOGGER.info("Course1 name before refresh: " + course1.getName());
+        em.refresh(course1); 
+        //the printed name will be without updated
+        LOGGER.info("Course1 name after refresh: " + course1.getName());
+        
+        em.flush();
+    }
+    
+    
 }
