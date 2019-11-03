@@ -26,3 +26,23 @@ insert into course_details(id, name, create_date, last_updated_date)
 insert into course_details(id, name, create_date, last_updated_date)
  values (10003, 'Corso 10003', SYSDATE(), SYSDATE());
 
+insert into student(id, name)
+ values (20001, 'Alessandro');
+insert into student(id, name)
+ values (20002, 'Silvia');
+insert into student(id, name)
+ values (20003, 'Pipipino');
+
+insert into passport(id, number)
+ values (40001, 'N40001');
+insert into passport(id, number)
+ values (40002, 'N40002');
+insert into passport(id, number)
+ values (40003, 'N40003');
+
+insert into review(id, rating, description)
+ values (500001, '5', 'Great course');
+insert into review(id, rating, description)
+ values (50002, '1' , 'Na schifezza');
+insert into review(id, rating, description)
+ values (50003, '4', 'Bello ma non ottimo');
