@@ -19,8 +19,10 @@ package it.apedano.jpahibernate.entity;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -35,6 +37,9 @@ public class Student implements Serializable {
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Passport passport;
 
     /**
      * Default constractor created by JPA Protected because has not to be public
@@ -56,6 +61,14 @@ public class Student implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public Passport getPassport() {
+        return passport;
+    }
+
+    public void setPassport(Passport passport) {
+        this.passport = passport;
     }
 
     @Override

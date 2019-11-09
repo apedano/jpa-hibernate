@@ -1,6 +1,7 @@
 package it.apedano.jpahibernate;
 
 import it.apedano.jpahibernate.repository.CourseRepository;
+import it.apedano.jpahibernate.repository.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,16 @@ public class JpaHibernateApplication implements CommandLineRunner {
     @Autowired
     CourseRepository courseRepository;
 
+    @Autowired
+    StudentRepository studentRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(JpaHibernateApplication.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-
+        studentRepository.saveStudentWithPassport();
     }
 
 }
