@@ -59,12 +59,25 @@ public class StudentRepository {
     }
 
     public void saveStudentWithPassport() {
+        //Step 1 - retrieve a student
+        Student student = this.findById(20001l);
+        //Now the persistence context contains only the student entity instance
 
-        Passport passport = new Passport("NC23");
-        Student student = new Student("MJ");
-        student.setPassport(passport);
-        em.persist(passport);
-        em.persist(student);
+        //Step 2 - get the passport from student using the student entity instance (lazy loaded)
+        Passport passport = student.getPassport();
+        //persistence context (student, passport)
+
+        //Step 3 - update passport
+        passport.setNumber("E123456");
+        //persistence context (student, passport++)
+        //if this method wasn't transactional there wouldn't be any persistence context here and an exception would
+        //have been thrown
+        //LazyInitializationException: could not initialize proxy [it.apedano.jpahibernate.entity.Passport#40001] - no Session
+        //Step 4 - update student
+        student.setName(student.getName() + " - updated");
+        //persistence context (student++, passport++)
+
+        //only here the changes will be persisted in the database or rolled back in case of errors
     }
 
 }
