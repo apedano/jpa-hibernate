@@ -19,8 +19,10 @@ package it.apedano.jpahibernate.entity;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -35,6 +37,14 @@ public class Passport implements Serializable {
 
     @Column(name = "number", nullable = false, unique = true)
     private String number;
+
+    /**
+     * Here we declare the owner of the relationship Mapped by stands for the owner of the entity, in this case Student
+     * is the owner of the Passport The mapped by refers to then name of the attribute in the owner entity Access field
+     * {@link Student#passport} The passport table will not have the studentID as column. Student will
+     */
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "passport")
+    private Student student;
 
     /**
      * Default constractor created by JPA Protected because has not to be public
@@ -56,6 +66,14 @@ public class Passport implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     @Override

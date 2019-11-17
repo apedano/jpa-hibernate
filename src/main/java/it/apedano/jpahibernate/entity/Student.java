@@ -38,6 +38,9 @@ public class Student implements Serializable {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+    /**
+     * alter table student add constraint FK6i2dofwfuu97njtfprqv68pib foreign key (passport_id) references passport
+     */
     @OneToOne(fetch = FetchType.LAZY)
     private Passport passport;
 

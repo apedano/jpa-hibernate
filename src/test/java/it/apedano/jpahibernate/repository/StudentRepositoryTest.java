@@ -89,4 +89,37 @@ public class StudentRepositoryTest {
          */
     }
 
+    @Test
+    @Transactional
+    public void getStudentFromPassport_oneToOneBidirectional() {
+        Passport passport = em.find(Passport.class, 40001l);
+        /*
+         select
+        passport0_.id as id1_1_0_,
+        passport0_.number as number2_1_0_
+    from
+        passport passport0_
+    where
+        passport0_.id=?
+2019-11-17 10:13:41.292 TRACE 132724 --- [           main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [BIGINT] - [40001]
+         */
+        LOGGER.info("Passport (owned) -> {}", passport);
+        Student student = passport.getStudent();
+        /*
+        select
+        student0_.id as id1_3_0_,
+        student0_.name as name2_3_0_,
+        student0_.passport_id as passport3_3_0_
+    from
+        student student0_
+    where
+        student0_.passport_id=?
+2019-11-17 10:13:41.293 TRACE 132724 --- [           main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [BIGINT] - [40001]
+2019-11-17 10:13:41.294 TRACE 132724 --- [           main] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_3_0_] : [BIGINT]) - [20001]
+2019-11-17 10:13:41.295 TRACE 132724 --- [           main] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([name2_3_0_] : [VARCHAR]) - [Alessandro - updated]
+2019-11-17 10:13:41.295 TRACE 132724 --- [           main] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([passport3_3_0_] : [BIGINT]) - [40001]
+         */
+        LOGGER.info("Student (owner) -> {}", student);
+    }
+
 }
