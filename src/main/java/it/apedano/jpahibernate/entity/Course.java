@@ -18,12 +18,16 @@ package it.apedano.jpahibernate.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -33,11 +37,12 @@ import org.hibernate.annotations.UpdateTimestamp;
  * @author Alessandro Pedano <alessandro.pedano@transsmart.com>
  */
 @Entity
-@Table(name="CourseDetails") //Hibernate will use the SQL convetions therefore the name will be course_details
+@Table(name = "CourseDetails") //Hibernate will use the SQL convetions therefore the name will be course_details
 @NamedQueries(
         value = {
-            @NamedQuery(name="get_all_courses", query="Select c from Course c"),
-            @NamedQuery(name="get_courses_like_giocare", query="Select c from Course c where c.name like '%giocare%'")
+            @NamedQuery(name = "get_all_courses", query = "Select c from Course c")
+            ,
+            @NamedQuery(name = "get_courses_like_giocare", query = "Select c from Course c where c.name like '%giocare%'")
         })
 public class Course implements Serializable {
 
@@ -45,16 +50,29 @@ public class Course implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Column(name="name", nullable = false, unique = false)
+    @Column(name = "name", nullable = false, unique = false)
     private String name;
-    
-    
+
+    //the mapped by indicates the owner (the table with id with the foreign key)
+    //Last version of Hibernate is aligned with the JPA 2.0 specs therefore those are the default fetching strategies
+    /*
+    OneToMany: LAZY
+    ManyToOne: EAGER
+    ManyToMany: LAZY
+    OneToOne: EAGER
+     */
+    @OneToMany(mappedBy = "course")
+    private final List<Review> reviews = new LinkedList<>();
+
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
+    private final List<Review> reviewsEager = new LinkedList<>();
+
     @UpdateTimestamp //not JPA but custom Hibernate annotation
     private LocalDateTime lastUpdatedDate;
-    
+
     @CreationTimestamp//not JPA but custom Hibernate annotation
     private LocalDateTime createDate;
-    
+
     /**
      * Default constractor created by JPA Protected because has not to be public
      */
@@ -77,11 +95,25 @@ public class Course implements Serializable {
         return id;
     }
 
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public List<Review> getReviewsEager() {
+        return reviewsEager;
+    }
+
+    public void addReview(Review review) {
+        this.reviews.add(review);
+    }
+
+    public void removeReview(Review review) {
+        this.reviews.remove(review);
+    }
+
     @Override
     public String toString() {
         return "Course{" + "id=" + id + ", name=" + name + ", lastUpdatedDate=" + lastUpdatedDate + ", createDate=" + createDate + '}';
     }
-
-    
 
 }

@@ -40,9 +40,9 @@ insert into student(id, name, passport_id)
 insert into student(id, name, passport_id)
  values (20003, 'Pipipino', 40003);
 
-insert into review(id, rating, description)
- values (500001, '5', 'Great course');
-insert into review(id, rating, description)
- values (50002, '1' , 'Na schifezza');
-insert into review(id, rating, description)
- values (50003, '4', 'Bello ma non ottimo');
+insert into review(id, rating, description, course_id)
+ values (500001, '5', 'Great course', 10001);
+insert into review(id, rating, description, course_id)
+ values (50002, '1' , 'Na schifezza', 10001);
+insert into review(id, rating, description, course_id)
+ values (50003, '4', 'Bello ma non ottimo', 10003);
