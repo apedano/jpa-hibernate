@@ -17,10 +17,13 @@
 package it.apedano.jpahibernate.repository;
 
 import it.apedano.jpahibernate.JpaHibernateApplication;
+import it.apedano.jpahibernate.entity.Course;
 import it.apedano.jpahibernate.entity.Passport;
 import it.apedano.jpahibernate.entity.Student;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -120,6 +123,33 @@ public class StudentRepositoryTest {
 2019-11-17 10:13:41.295 TRACE 132724 --- [           main] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([passport3_3_0_] : [BIGINT]) - [40001]
          */
         LOGGER.info("Student (owner) -> {}", student);
+    }
+    
+    @Test
+    @Transactional
+    public void useManyToMany_fromStudentToCourses() {
+        Student student = studentRepository.findById(20001l);
+        LOGGER.info("Student -> {}", student);
+        List<Course> courses = student.getCourses();
+        LOGGER.info("Get courses called"); //not fetched yet because of the lazy fetching by default
+        /*
+        select
+        courses0_.student_id as student_1_4_0_,
+        courses0_.course_id as course_i2_4_0_,
+        course1_.id as id1_0_1_,
+        course1_.create_date as create_d2_0_1_,
+        course1_.last_updated_date as last_upd3_0_1_,
+        course1_.name as name4_0_1_ 
+    from
+        student_course courses0_ 
+    inner join  --->> INNER JOIN
+        course_details course1_ 
+            on courses0_.course_id=course1_.id 
+    where
+        courses0_.student_id=?
+        */
+        LOGGER.info("Courses -> {}", courses);
+        assertTrue(courses.size() == 2);
     }
 
 }

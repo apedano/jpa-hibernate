@@ -16,6 +16,7 @@
  */
 package it.apedano.jpahibernate.repository;
 
+import it.apedano.jpahibernate.entity.Course;
 import it.apedano.jpahibernate.entity.Passport;
 import it.apedano.jpahibernate.entity.Student;
 import javax.persistence.EntityManager;
@@ -78,6 +79,40 @@ public class StudentRepository {
         //persistence context (student++, passport++)
 
         //only here the changes will be persisted in the database or rolled back in case of errors
+    }
+    
+    public void insertHardcodedStudenAndCourse() {
+        Student student = new Student("Jack");
+        Course course = new Course("Microservices in 100 steps");
+        em.persist(student); //call next value for hibernate_sequence
+        em.persist(course); //call next value for hibernate_sequence
+        
+        student.addCourse(course);
+        course.addStudent(student);
+        /*
+        At the end of the method (transactional)
+        
+         insert 
+    into
+        student
+        (name, passport_id, id) 
+    values
+        (?, ?, ?)
+        
+        insert 
+    into
+        course_details
+        (create_date, last_updated_date, name, id) 
+    values
+        
+        insert 
+    into
+        student_course
+        (student_id, course_id) 
+    values
+        (?, ?)
+        */
+        
     }
 
 }

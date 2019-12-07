@@ -25,6 +25,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -66,6 +67,9 @@ public class Course implements Serializable {
 
     @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
     private final List<Review> reviewsEager = new LinkedList<>();
+    
+    @ManyToMany(mappedBy = "courses")
+    List<Student> students = new LinkedList<>();
 
     @UpdateTimestamp //not JPA but custom Hibernate annotation
     private LocalDateTime lastUpdatedDate;
@@ -110,6 +114,14 @@ public class Course implements Serializable {
     public void removeReview(Review review) {
         this.reviews.remove(review);
     }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void addStudent(Student student) {
+        this.students.add(student);
+    }  
 
     @Override
     public String toString() {

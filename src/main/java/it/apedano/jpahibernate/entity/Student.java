@@ -17,11 +17,16 @@
 package it.apedano.jpahibernate.entity;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -43,6 +48,31 @@ public class Student implements Serializable {
      */
     @OneToOne(fetch = FetchType.LAZY)
     private Passport passport;
+    
+    @ManyToMany
+    //for the owning side of the relationship
+    //we can define the join table name and column namse
+    /**
+     * create table student_course (
+       student_id bigint not null,
+        course_id bigint not null
+        * 
+        * 
+        * alter table student_course 
+       add constraint FKa09ocite73agl8tjixt02mhk7 
+       foreign key (course_id) 
+       references course_details
+       * 
+       *  alter table student_course 
+       add constraint FKq7yw2wg9wlt2cnj480hcdn6dq 
+       foreign key (student_id) 
+       references student
+    )
+     */
+    @JoinTable(name="STUDENT_COURSE",
+            joinColumns = @JoinColumn(name = "STUDENT_ID"),
+             inverseJoinColumns = @JoinColumn(name = "COURSE_ID")) 
+    private List<Course> courses = new LinkedList<>();
 
     /**
      * Default constractor created by JPA Protected because has not to be public
@@ -72,6 +102,14 @@ public class Student implements Serializable {
 
     public void setPassport(Passport passport) {
         this.passport = passport;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void addCourse(Course course) {
+        this.courses.add(course);
     }
 
     @Override
