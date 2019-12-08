@@ -82,6 +82,7 @@ PROS
 CONS
 -  We cannot query using the superclass beacuse it is not an entity we can use to 
 query instances
+- The inheritance doesn't exist at all... 
 
  */
 

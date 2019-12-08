@@ -1,11 +1,8 @@
 package it.apedano.jpahibernate;
 
-import it.apedano.jpahibernate.entity.FullTimeEmployee;
-import it.apedano.jpahibernate.entity.PartTimeEmployee;
 import it.apedano.jpahibernate.repository.CourseRepository;
 import it.apedano.jpahibernate.repository.EmployeeRepository;
 import it.apedano.jpahibernate.repository.StudentRepository;
-import java.math.BigDecimal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +39,12 @@ public class JpaHibernateApplication implements CommandLineRunner {
 //        );
 //        courseRepository.addReviewsForCourse(10003l, reviews);
         //studentRepository.insertHardcodedStudenAndCourse();
-        employeeRepository.insert(new FullTimeEmployee("Jack", BigDecimal.valueOf(10000)));
-        employeeRepository.insert(new PartTimeEmployee("Jill", BigDecimal.valueOf(50)));
-        //LOGGER.info("Employees -> {}", employeeRepository.retrieveAll());
-        //For MappedClassSuperclass
-        LOGGER.info("PartTimeEmployees -> {}", employeeRepository.retrieveAllPartTimeEmployee());
-        LOGGER.info("FullTimeEmployees -> {}", employeeRepository.retrieveAllFullTimeEmployee());
+//        employeeRepository.insert(new FullTimeEmployee("Jack", BigDecimal.valueOf(10000)));
+//        employeeRepository.insert(new PartTimeEmployee("Jill", BigDecimal.valueOf(50)));
+//        //LOGGER.info("Employees -> {}", employeeRepository.retrieveAll());
+//        //For MappedClassSuperclass
+//        LOGGER.info("PartTimeEmployees -> {}", employeeRepository.retrieveAllPartTimeEmployee());
+//        LOGGER.info("FullTimeEmployees -> {}", employeeRepository.retrieveAllFullTimeEmployee());
 
     }
 

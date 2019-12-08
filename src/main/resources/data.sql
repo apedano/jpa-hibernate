@@ -25,6 +25,8 @@ insert into course_details(id, name, create_date, last_updated_date)
  values (10002, 'Corso 10002', SYSDATE(), SYSDATE());
 insert into course_details(id, name, create_date, last_updated_date)
  values (10003, 'Corso 10003', SYSDATE(), SYSDATE());
+insert into course_details(id, name, create_date, last_updated_date)
+ values (10004, 'Corso 10004', SYSDATE(), SYSDATE());
 
 insert into passport(id, number)
  values (40001, 'N40001');
