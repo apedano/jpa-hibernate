@@ -22,7 +22,6 @@ import it.apedano.jpahibernate.entity.Passport;
 import it.apedano.jpahibernate.entity.Student;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +31,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -51,7 +52,7 @@ public class StudentRepositoryTest {
 
     @Test
     @DirtiesContext
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void retrieveStudentAndPassportDetailsOneToOneEagerLazyLoadingTest() {
         LOGGER.info("Test is running...");
         Student student = em.find(Student.class, 20001L);

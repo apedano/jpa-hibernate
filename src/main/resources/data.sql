@@ -27,6 +27,20 @@ insert into course_details(id, name, create_date, last_updated_date)
  values (10003, 'Corso 10003', SYSDATE(), SYSDATE());
 insert into course_details(id, name, create_date, last_updated_date)
  values (10004, 'Corso 10004', SYSDATE(), SYSDATE());
+insert into course_details(id, name, create_date, last_updated_date)
+ values (10005, 'Un corso', SYSDATE(), SYSDATE());
+insert into course_details(id, name, create_date, last_updated_date)
+ values (10006, 'Ancora un altro corso', SYSDATE(), SYSDATE());
+insert into course_details(id, name, create_date, last_updated_date)
+ values (10007, 'Sempre un altro corso', SYSDATE(), SYSDATE());
+insert into course_details(id, name, create_date, last_updated_date)
+ values (10008, 'Mii quanti corsi', SYSDATE(), SYSDATE());
+insert into course_details(id, name, create_date, last_updated_date)
+ values (10009, 'Basta ancora corsi', SYSDATE(), SYSDATE());
+insert into course_details(id, name, create_date, last_updated_date)
+ values (10010, 'Ora me ne vado', SYSDATE(), SYSDATE());
+insert into course_details(id, name, create_date, last_updated_date)
+ values (10011, 'Andato', SYSDATE(), SYSDATE());
 
 insert into passport(id, number)
  values (40001, 'N40001');
