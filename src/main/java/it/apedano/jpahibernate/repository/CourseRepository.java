@@ -20,18 +20,19 @@ import it.apedano.jpahibernate.entity.Course;
 import it.apedano.jpahibernate.entity.Review;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Alessandro Pedano <alessandro.pedano@transsmart.com>
  */
 @Repository
-@Transactional //any public method in this class will be executed within a transaction
+@Transactional(isolation = Isolation.READ_UNCOMMITTED) //any public method in this class will be executed within a transaction
 public class CourseRepository {
 
     private final Logger LOGGER = LoggerFactory.getLogger(CourseRepository.class);
