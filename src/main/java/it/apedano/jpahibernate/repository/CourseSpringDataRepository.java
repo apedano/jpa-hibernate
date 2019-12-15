@@ -10,11 +10,13 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
  *
  * @author Alessandro
  */
+@RepositoryRestResource(path= "courses") //exposed as a rest resource -> http://localhost:8080/courses
 public interface CourseSpringDataRepository 
         extends JpaRepository<Course, Long> {
     

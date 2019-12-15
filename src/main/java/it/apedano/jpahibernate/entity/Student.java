@@ -16,6 +16,7 @@
  */
 package it.apedano.jpahibernate.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,6 +48,7 @@ public class Student implements Serializable {
      * alter table student add constraint FK6i2dofwfuu97njtfprqv68pib foreign key (passport_id) references passport
      */
     @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore //to avoid the infinite loop in the json output of the rest 
     private Passport passport;
     
     @ManyToMany
