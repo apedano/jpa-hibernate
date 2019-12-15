@@ -60,6 +60,7 @@ public class Student implements Serializable {
         course_id bigint not null
         * 
         * 
+        * 
         * alter table student_course 
        add constraint FKa09ocite73agl8tjixt02mhk7 
        foreign key (course_id) 

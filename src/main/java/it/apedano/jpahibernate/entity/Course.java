@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,6 +46,7 @@ import org.hibernate.annotations.UpdateTimestamp;
             ,
             @NamedQuery(name = "get_courses_like_giocare", query = "Select c from Course c where c.name like '%giocare%'")
         })
+@Cacheable
 public class Course implements Serializable {
 
     @Id

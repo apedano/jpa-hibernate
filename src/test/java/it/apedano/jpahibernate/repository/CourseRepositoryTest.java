@@ -22,9 +22,12 @@ import it.apedano.jpahibernate.entity.Review;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import net.sf.ehcache.CacheManager;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -58,6 +61,38 @@ public class CourseRepositoryTest {
         Course course = courseRepository.findById(10001L);
         assertEquals("Corso 10001", course.getName());
         //at the end the test the db is dropped
+    }
+
+    @Test
+    @Transactional
+    public void findById_firstLevelCache() {
+        LOGGER.info("Test is running...");
+        Course course = courseRepository.findById(10001L);
+        LOGGER.info("First course retrieved!");
+        /*
+        This second load action will not require access to db because the entity instance
+        is already cached in the PersistenceContext of the EntityManager (L1 cache) in the same transaction
+        If the method is not annotated with @Transactional every find method would run to a separate transaction, therefore the 
+        load query would be submitted to the db twice.
+         */
+ /* No query being fired
+        2019-12-15 16:05:13.122  INFO 15764 --- [           main] i.a.j.repository.CourseRepositoryTest    : First course retrieved!
+        2019-12-15 16:05:13.122  INFO 15764 --- [           main] i.a.j.repository.CourseRepositoryTest    : First course retrieved again!
+         */
+        Course course1 = courseRepository.findById(10001L);
+        LOGGER.info("First course retrieved again!");
+        assertEquals("Corso 10001", course.getName());
+        assertEquals("Corso 10001", course1.getName());
+    }
+
+    @Test
+    public void secondLevelCacheTest() {
+        LOGGER.info("Test is running...");
+        Course course = courseRepository.findById(10001L);
+        LOGGER.info("First course retrieved!");
+        int size = CacheManager.ALL_CACHE_MANAGERS.get(0)
+                .getCache("it.apedano.jpahibernate.entity.Course").getSize();
+        assertThat(size, greaterThan(0));
     }
 
     @Test
