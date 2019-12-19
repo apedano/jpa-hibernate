@@ -48,7 +48,8 @@ public class NativeQueriesTest {
     @DirtiesContext //spring will automatically reset the data changed by the test method. This makes the test atomic and isolated
     public void nativeQuery_basic() {
         //you are not usinf the persistence context here with native queries
-        Query query = em.createNativeQuery("SELECT * FROM COURSE_DETAILS", Course.class);
+        //Native queries don't use the @Where annotation therefore we have to manually add the clause
+        Query query = em.createNativeQuery("SELECT * FROM COURSE_DETAILS where is_deleted=0", Course.class);
         List<Course> courses = query.getResultList();
         LOGGER.info("Results of 'SELECT * FROM COURSE_DETAILS' -> {}", courses);
     }

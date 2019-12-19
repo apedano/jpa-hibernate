@@ -17,6 +17,7 @@
 package it.apedano.jpahibernate.repository;
 
 import it.apedano.jpahibernate.JpaHibernateApplication;
+import it.apedano.jpahibernate.entity.Address;
 import it.apedano.jpahibernate.entity.Course;
 import it.apedano.jpahibernate.entity.Passport;
 import it.apedano.jpahibernate.entity.Student;
@@ -91,6 +92,19 @@ public class StudentRepositoryTest {
          *
          * Note: the method has to be transactional because it requires the open session to load the entity
          */
+    }
+    
+    @Test
+    @DirtiesContext
+    @Transactional
+    public void setAddressDetailsForAStudent() {
+        LOGGER.info("Test is running...");
+        Student student = em.find(Student.class, 20001L);
+        student.setAddress(new Address("Via", "Contessa Adelasia", "Palermo"));
+        em.flush(); //we push the address to the database
+        LOGGER.info("Student -> {}", student);
+        Passport passport = student.getPassport();
+        LOGGER.info("Passport -> {}", passport);
     }
 
     @Test

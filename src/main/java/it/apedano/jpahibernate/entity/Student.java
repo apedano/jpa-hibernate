@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -43,6 +44,24 @@ public class Student implements Serializable {
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
+    
+    /*
+    I don't want to have the Address class to be a separate class in the database
+    I just want to group all the address columns in a separate class, but leave the columns 
+    in the Student table
+    
+    create table student (
+       id bigint not null,
+        city varchar(255),
+        line1 varchar(255),
+        line2 varchar(255),
+        name varchar(255) not null,
+        passport_id bigint,
+        primary key (id)
+    )
+    */
+    @Embedded
+    private Address address;
 
     /**
      * alter table student add constraint FK6i2dofwfuu97njtfprqv68pib foreign key (passport_id) references passport
@@ -89,6 +108,14 @@ public class Student implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public void setName(String name) {

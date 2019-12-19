@@ -99,7 +99,7 @@ public class CourseRepositoryTest {
     @DirtiesContext //spring will automatically reset the data changed by the test method. This makes the test atomic and isolated
     public void deleteByIdTest() {
         long id = 10002L;
-        courseRepository.deleteById(id);
+        courseRepository.deleteById(id); //the course will be soft deleted because of the @SQLDelete annotation
         assertNull(courseRepository.findById(id));
     }
 

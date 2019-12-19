@@ -30,9 +30,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -47,7 +52,36 @@ import org.hibernate.annotations.UpdateTimestamp;
             @NamedQuery(name = "get_courses_like_giocare", query = "Select c from Course c where c.name like '%giocare%'")
         })
 @Cacheable
+@SQLDelete(sql = "update course_details set is_deleted = true where id=?") //hibernate specific annotation to specify the deletion query
+/*
+SOFT DELETE -> the rows are not phisically deleted from the database
+em.remove(course);
+update
+        course_details 
+    set
+        is_deleted = true 
+    where
+        id=?
+*/
+@Where(clause = "is_deleted = false") //clause to be added to the load query
+/*
+Hibernate is not aware of the content of the clause it just append the clause
+select
+        ...
+    from
+        course_details course0_ 
+    left outer join
+        review reviewseag1_ 
+            on course0_.id=reviewseag1_.course_id 
+    where
+        course0_.id=? 
+        and (
+            course0_.is_deleted = 0
+        )
+*/
 public class Course implements Serializable {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(Course.class);
 
     @Id
     @GeneratedValue
@@ -78,6 +112,16 @@ public class Course implements Serializable {
 
     @CreationTimestamp//not JPA but custom Hibernate annotation
     private LocalDateTime createDate;
+    
+    private boolean isDeleted;
+    
+    @PreRemove //entity lifecycle hook executed before specific entity instance deletion
+    private void preRemove() {
+        //if we have the entity within a transaction with the deleted status
+        //the information at level of the entity will be updated as well.
+        LOGGER.info("@PreRemove -> set is_deleted to true");
+        this.isDeleted = true;
+    }
 
     /**
      * Default constractor created by JPA Protected because has not to be public
