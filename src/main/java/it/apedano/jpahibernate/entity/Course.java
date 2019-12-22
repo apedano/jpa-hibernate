@@ -49,6 +49,8 @@ import org.slf4j.LoggerFactory;
         value = {
             @NamedQuery(name = "get_all_courses", query = "Select c from Course c")
             ,
+            @NamedQuery(name = "get_all_courses_join_fetch", query = "Select c from Course c JOIN FETCH c.students s") 
+            ,
             @NamedQuery(name = "get_courses_like_giocare", query = "Select c from Course c where c.name like '%giocare%'")
         })
 @Cacheable

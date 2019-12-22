@@ -18,6 +18,7 @@ package it.apedano.jpahibernate.repository;
 
 import it.apedano.jpahibernate.entity.Course;
 import it.apedano.jpahibernate.entity.Review;
+import it.apedano.jpahibernate.entity.ReviewRating;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.slf4j.Logger;
@@ -136,8 +137,8 @@ public class CourseRepository {
          */
         LOGGER.info("Reviews of course 10001 -> {}", reviews);
         LOGGER.info("Create new reviews");
-        Review review1 = new Review("New description1", "1");
-        Review review2 = new Review("New description2", "2");
+        Review review1 = new Review("New description1", ReviewRating.THREE);
+        Review review2 = new Review("New description2", ReviewRating.TWO);
 
         LOGGER.info("Set the relationships");
         review1.setCourse(course);

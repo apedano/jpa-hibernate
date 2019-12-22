@@ -57,11 +57,11 @@ insert into student(id, name, passport_id)
  values (20003, 'Pipipino', 40003);
 
 insert into review(id, rating, description, course_id)
- values (500001, '5', 'Great course', 10001);
+ values (500001, 'TWO', 'Great course', 10001);
 insert into review(id, rating, description, course_id)
- values (50002, '1' , 'Na schifezza', 10001);
+ values (50002, 'ONE' , 'Na schifezza', 10001);
 insert into review(id, rating, description, course_id)
- values (50003, '4', 'Bello ma non ottimo', 10003);
+ values (50003, 'FOUR', 'Bello ma non ottimo', 10003);
 
 insert into student_course (student_id, course_id) VALUES (20001,10001);
 insert into student_course (student_id, course_id) VALUES (20002,10002);

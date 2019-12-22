@@ -102,6 +102,23 @@ public class StudentRepositoryTest {
         Student student = em.find(Student.class, 20001L);
         student.setAddress(new Address("Via", "Contessa Adelasia", "Palermo"));
         em.flush(); //we push the address to the database
+        /*
+            student 
+    set
+        city=?,
+        line1=?,
+        line2=?,
+        name=?,
+        passport_id=? 
+    where
+        id=?
+2019-12-19 20:02:37.824 TRACE 80436 --- [           main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [Palermo]
+2019-12-19 20:02:37.824 TRACE 80436 --- [           main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [Via]
+2019-12-19 20:02:37.824 TRACE 80436 --- [           main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [Contessa Adelasia]
+2019-12-19 20:02:37.824 TRACE 80436 --- [           main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [Alessandro]
+2019-12-19 20:02:37.824 TRACE 80436 --- [           main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [BIGINT] - [40001]
+2019-12-19 20:02:37.824 TRACE 80436 --- [           main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [BIGINT] - [20001]
+        */
         LOGGER.info("Student -> {}", student);
         Passport passport = student.getPassport();
         LOGGER.info("Passport -> {}", passport);

@@ -19,6 +19,8 @@ package it.apedano.jpahibernate.entity;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -40,7 +42,15 @@ public class Review implements Serializable {
     @ManyToOne
     private Course course;
 
-    private String rating;
+    /*By default the corresponding value stored in the database will be the ordinal
+    of the enum: 1 for the first value, 2 for the second and so on...
+     but it is a bad database design because if we insert a value in between existing ones
+    all ordinals in our database will change creating inconsistencies.
+    That's why we use the enum type String
+    
+    */
+    @Enumerated(EnumType.STRING) 
+    private ReviewRating rating;
 
     /**
      * Default constractor created by JPA Protected because has not to be public
@@ -48,7 +58,7 @@ public class Review implements Serializable {
     protected Review() {
     }
 
-    public Review(String description, String rating) {
+    public Review(String description, ReviewRating rating) {
         this.description = description;
         this.rating = rating;
     }
@@ -61,13 +71,15 @@ public class Review implements Serializable {
         this.description = description;
     }
 
-    public String getRating() {
+    public ReviewRating getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(ReviewRating rating) {
         this.rating = rating;
     }
+
+    
 
     public Long getId() {
         return id;
